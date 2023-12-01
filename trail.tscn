@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqkfbf7544rt"]
+
+[ext_resource type="Script" path="res://trail.gd" id="1_b1d3e"]
+
+[sub_resource type="Curve" id="Curve_1f21s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Trail" type="Line2D"]
+top_level = true
+z_index = -10
+width_curve = SubResource("Curve_1f21s")
+script = ExtResource("1_b1d3e")

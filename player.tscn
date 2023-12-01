@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://o63hvo6vk6iw"]
+[gd_scene load_steps=5 format=3 uid="uid://o63hvo6vk6iw"]
 
 [ext_resource type="Texture2D" uid="uid://b2n37avqy4hfc" path="res://assets/player.png" id="1_igxjj"]
 [ext_resource type="Script" path="res://player.gd" id="1_in1dq"]
+[ext_resource type="PackedScene" uid="uid://bqkfbf7544rt" path="res://trail.tscn" id="3_r48iw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xck2d"]
 size = Vector2(10, 8)
@@ -24,3 +25,6 @@ position_smoothing_speed = 8.0
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_xck2d")
+
+[node name="Trail" parent="." instance=ExtResource("3_r48iw")]
+position = Vector2(0, -5)
