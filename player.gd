@@ -12,8 +12,11 @@ enum { RUN, FLY }
 
 @export_group("Flying")
 @export var fly_speed = 280
+@export var stamina_cost = 15
+@export var stamina_regen = 10
 @export var acceleration = 1800
 @export var deceleration = 1800
+@export var stamina_bar: TextureProgressBar
 
 @export_group("Animation")
 @export var fly_texture: Texture2D
@@ -34,10 +37,12 @@ var original_texture: Texture2D
 var run_rotation = 0
 var double_jump_rotation = 0
 var can_double_jump = false
+var stamina = 100
 
 func _ready():
 	Globals.player = self
 	original_texture = sprite.texture
+	update_stamina(0, 0)
 
 func _process(delta: float) -> void:
 	sprite.scale = sprite.scale.move_toward(original_scale, squash_stretch_smoothing * delta)
@@ -78,6 +83,8 @@ func run_state(delta: float):
 	if Input.is_action_just_pressed("fly"):
 		start_fly()
 
+	update_stamina(stamina_regen, delta)
+
 	var was_on_floor = is_on_floor()
 
 	move_and_slide()
@@ -95,6 +102,8 @@ func fly_state(delta: float):
 	if Input.is_action_just_pressed("fly"):
 		end_fly()
 
+	update_stamina(-stamina_cost, delta)
+
 	move_and_slide()
 
 func start_fly():
@@ -110,3 +119,11 @@ func end_fly():
 	sprite.texture = original_texture
 	fly_collider.disabled = true
 	run_collider.disabled = false
+
+func update_stamina(value: float, delta: float):
+	stamina += value * delta
+	stamina = clampf(stamina, 0, 100)
+	stamina_bar.value = stamina
+
+	if stamina <= 0:
+		end_fly()
