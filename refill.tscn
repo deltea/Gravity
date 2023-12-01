@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bejvcspusjgu1"]
+
+[ext_resource type="Script" path="res://refill.gd" id="1_frt73"]
+[ext_resource type="Texture2D" uid="uid://chn7kd6b24shu" path="res://assets/refill.png" id="1_mthvj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ls4cn"]
+size = Vector2(12, 12)
+
+[node name="Refill" type="Area2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_frt73")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_mthvj")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ls4cn")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://di2y6kfmakfxa"]
+[gd_scene load_steps=8 format=3 uid="uid://di2y6kfmakfxa"]
 
 [ext_resource type="Texture2D" uid="uid://cr7cr36w0ji06" path="res://assets/background.png" id="1_t1c3w"]
 [ext_resource type="PackedScene" uid="uid://o63hvo6vk6iw" path="res://player.tscn" id="1_v8rmo"]
 [ext_resource type="Texture2D" uid="uid://b0510blj75742" path="res://assets/stamina-bar.png" id="2_bunqf"]
 [ext_resource type="Texture2D" uid="uid://clr5ypybtun8g" path="res://assets/tileset.png" id="2_kqmtn"]
+[ext_resource type="PackedScene" uid="uid://bejvcspusjgu1" path="res://refill.tscn" id="5_dhpsl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5mqcb"]
 texture = ExtResource("2_kqmtn")
@@ -618,3 +619,6 @@ layer_0/tile_data = PackedInt32Array(917504, 65537, 1, 851968, 65537, 1, 786432,
 [node name="Player" parent="World" node_paths=PackedStringArray("stamina_bar") instance=ExtResource("1_v8rmo")]
 position = Vector2(39, 110)
 stamina_bar = NodePath("../../CanvasLayer/Stamina")
+
+[node name="Refill" parent="World" instance=ExtResource("5_dhpsl")]
+position = Vector2(424, 56)

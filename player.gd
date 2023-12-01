@@ -26,6 +26,7 @@ enum { RUN, FLY }
 @export var squash_stretch_smoothing = 4
 @export var run_rotation_degrees = 30
 @export var rotation_smoothing = 1000
+@export var stamina_bar_smoothing = 200
 
 @onready var sprite := $Sprite
 @onready var trail := $Trail
@@ -43,11 +44,13 @@ var stamina = 100
 func _ready():
 	Globals.player = self
 	original_texture = sprite.texture
-	update_stamina(0, 0)
+	update_stamina(0)
 
 func _process(delta: float) -> void:
 	sprite.scale = sprite.scale.move_toward(original_scale, squash_stretch_smoothing * delta)
 	sprite.rotation_degrees = move_toward(sprite.rotation_degrees, run_rotation + double_jump_rotation, rotation_smoothing * delta)
+
+	stamina_bar.value = move_toward(stamina_bar.value, stamina, stamina_bar_smoothing * delta)
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -100,10 +103,13 @@ func fly_state(delta: float):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 
+	if input:
+		update_stamina(-stamina_cost, delta)
+	else:
+		update_stamina(stamina_regen, delta)
+
 	if Input.is_action_just_pressed("fly"):
 		end_fly()
-
-	update_stamina(-stamina_cost, delta)
 
 	move_and_slide()
 
@@ -123,10 +129,14 @@ func end_fly():
 	run_collider.disabled = false
 	sprite.scale = Vector2.ONE * fly_transition_scale
 
-func update_stamina(value: float, delta: float):
+func update_stamina(value: float, delta: float = 1):
 	stamina += value * delta
 	stamina = clampf(stamina, 0, 100)
-	stamina_bar.value = stamina
 
 	if stamina <= 0:
 		end_fly()
+
+func _on_item_area_area_entered(area: Area2D) -> void:
+	if area is Refill:
+		area.on_collect()
+		update_stamina(100)
