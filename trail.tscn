@@ -8,6 +8,7 @@ point_count = 2
 
 [node name="Trail" type="Line2D"]
 top_level = true
+z_index = 10
 width = 15.0
 width_curve = SubResource("Curve_1f21s")
 joint_mode = 2

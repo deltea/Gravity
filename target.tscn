@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://ducsoj3lu5jvu"]
+
+[ext_resource type="Texture2D" uid="uid://dhjc3nobj4fdd" path="res://assets/target.png" id="1_kjn44"]
+[ext_resource type="Script" path="res://target.gd" id="1_rl53d"]
+[ext_resource type="Texture2D" uid="uid://df6tkdx5a1bkk" path="res://assets/target-unlit.png" id="2_ei0ro"]
+[ext_resource type="Texture2D" uid="uid://bhu6m3mu01m05" path="res://assets/target-ground.png" id="3_vg8w2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2i12"]
+size = Vector2(16, 32)
+
+[node name="Target" type="Area2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_rl53d")
+unlit_texture = ExtResource("2_ei0ro")
+lit_texture = ExtResource("1_kjn44")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, 16)
+texture = ExtResource("3_vg8w2")
+offset = Vector2(0, -16)
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_o2i12")
+
+[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.8, 1.6)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_exited"]

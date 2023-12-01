@@ -28,6 +28,10 @@ enum { RUN, FLY }
 @export var rotation_smoothing = 1000
 @export var stamina_bar_smoothing = 200
 
+@export_group("Gameplay")
+@export var arrow: TextureRect
+@export var arrow_distance = 100
+
 @onready var sprite := $Sprite
 @onready var trail := $Trail
 @onready var run_collider := $CollisionShape
@@ -41,8 +45,10 @@ var double_jump_rotation = 0
 var can_double_jump = false
 var stamina = 100
 
-func _ready():
+func _enter_tree() -> void:
 	Globals.player = self
+
+func _ready() -> void:
 	original_texture = sprite.texture
 	update_stamina(0)
 
@@ -51,6 +57,12 @@ func _process(delta: float) -> void:
 	sprite.rotation_degrees = move_toward(sprite.rotation_degrees, run_rotation + double_jump_rotation, rotation_smoothing * delta)
 
 	stamina_bar.value = move_toward(stamina_bar.value, stamina, stamina_bar_smoothing * delta)
+
+	var current_target = Globals.level_manager.targets_left.front()
+	var direction = current_target.position - position
+	arrow.rotation = direction.angle()
+	arrow.position = Globals.SCREEN_CENTER + Vector2.from_angle(arrow.rotation) * arrow_distance
+	# arrow.position.x = clamp(arrow.position.x, 30, Globals.SCREEN_SIZE.x - 30)
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -103,10 +115,7 @@ func fly_state(delta: float):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 
-	if input:
-		update_stamina(-stamina_cost, delta)
-	else:
-		update_stamina(stamina_regen, delta)
+	update_stamina(-stamina_cost, delta)
 
 	if Input.is_action_just_pressed("fly"):
 		end_fly()
@@ -136,7 +145,18 @@ func update_stamina(value: float, delta: float = 1):
 	if stamina <= 0:
 		end_fly()
 
+func hide_arrow(target: Target):
+	if not target == Globals.level_manager.targets_left.front(): return
+	arrow.hide()
+
+func show_arrow(target: Target):
+	if not target == Globals.level_manager.targets_left.front(): return
+	arrow.show()
+
 func _on_item_area_area_entered(area: Area2D) -> void:
 	if area is Refill:
 		area.on_collect()
 		update_stamina(100)
+	elif area is Target and area == Globals.level_manager.targets_left.front():
+		Globals.level_manager.pop_target()
+		arrow.show()
