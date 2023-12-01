@@ -4,19 +4,20 @@ class_name Player
 enum { RUN, FLY }
 
 @export_group("Running")
-@export var run_speed = 200
+@export var run_speed = 220
 @export var jump_velocity = 320
 @export var gravity = 980
 @export var fall_gravity = 1800
 @export var double_jump = true
 
 @export_group("Flying")
-@export var fly_speed = 280
+@export var fly_speed = 300
 @export var stamina_cost = 15
 @export var stamina_regen = 10
 @export var acceleration = 1800
 @export var deceleration = 1800
 @export var stamina_bar: TextureProgressBar
+@export var fly_transition_scale = 1.8
 
 @export_group("Animation")
 @export var fly_texture: Texture2D
@@ -112,6 +113,7 @@ func start_fly():
 	sprite.texture = fly_texture
 	run_collider.disabled = true
 	fly_collider.disabled = false
+	sprite.scale = Vector2.ONE * fly_transition_scale
 
 func end_fly():
 	state = RUN
@@ -119,6 +121,7 @@ func end_fly():
 	sprite.texture = original_texture
 	fly_collider.disabled = true
 	run_collider.disabled = false
+	sprite.scale = Vector2.ONE * fly_transition_scale
 
 func update_stamina(value: float, delta: float):
 	stamina += value * delta
