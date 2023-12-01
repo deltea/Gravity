@@ -1,17 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://o63hvo6vk6iw"]
+[gd_scene load_steps=7 format=3 uid="uid://o63hvo6vk6iw"]
 
 [ext_resource type="Texture2D" uid="uid://b2n37avqy4hfc" path="res://assets/player.png" id="1_igxjj"]
 [ext_resource type="Script" path="res://player.gd" id="1_in1dq"]
+[ext_resource type="Texture2D" uid="uid://d3chpeu2m4mo7" path="res://assets/player-fly.png" id="2_c5hv1"]
 [ext_resource type="PackedScene" uid="uid://bqkfbf7544rt" path="res://trail.tscn" id="3_r48iw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xck2d"]
 size = Vector2(10, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dn35j"]
+radius = 2.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 15
 floor_constant_speed = true
 script = ExtResource("1_in1dq")
+fly_texture = ExtResource("2_c5hv1")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -6)
@@ -26,5 +31,11 @@ position_smoothing_speed = 8.0
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_xck2d")
 
-[node name="Trail" parent="." instance=ExtResource("3_r48iw")]
+[node name="FlyCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_dn35j")
+disabled = true
+
+[node name="Trail" parent="." instance=ExtResource("3_r48iw")]
+position = Vector2(0, -7)
+width = 12.0

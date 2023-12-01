@@ -7,12 +7,10 @@ var queue: Array[Vector2]
 var enabled = false
 
 func _process(_delta: float) -> void:
-	if not enabled: return
-
 	var pos = get_parent().global_position
 
-	queue.push_front(pos)
-	if queue.size() > trail_length:
+	if enabled: queue.push_front(pos)
+	if queue.size() > (trail_length if enabled else 0):
 		queue.pop_back()
 
 	clear_points()
@@ -25,5 +23,3 @@ func enable():
 
 func disable():
 	enabled = false
-	clear_points()
-	queue = []

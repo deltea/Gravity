@@ -4,18 +4,19 @@ class_name Player
 enum { RUN, FLY }
 
 @export_group("Running")
-@export var run_speed = 180
+@export var run_speed = 200
 @export var jump_velocity = 320
 @export var gravity = 980
 @export var fall_gravity = 1800
 @export var double_jump = true
 
 @export_group("Flying")
-@export var fly_speed = 240
+@export var fly_speed = 280
 @export var acceleration = 1800
 @export var deceleration = 1800
 
 @export_group("Animation")
+@export var fly_texture: Texture2D
 @export var stretch = 1.8
 @export var squash = 1.8
 @export var squash_stretch_smoothing = 4
@@ -24,15 +25,19 @@ enum { RUN, FLY }
 
 @onready var sprite := $Sprite
 @onready var trail := $Trail
+@onready var run_collider := $CollisionShape
+@onready var fly_collider := $FlyCollisionShape
 
 var state = RUN
 var original_scale = Vector2.ONE
+var original_texture: Texture2D
 var run_rotation = 0
 var double_jump_rotation = 0
 var can_double_jump = false
 
 func _ready():
 	Globals.player = self
+	original_texture = sprite.texture
 
 func _process(delta: float) -> void:
 	sprite.scale = sprite.scale.move_toward(original_scale, squash_stretch_smoothing * delta)
@@ -70,9 +75,8 @@ func run_state(delta: float):
 				double_jump_rotation += (1.0 if input == 0 else input) * 360
 				can_double_jump = false
 
-	if Input.is_action_just_pressed("transform"):
-		state = FLY
-		trail.enable()
+	if Input.is_action_just_pressed("fly"):
+		start_fly()
 
 	var was_on_floor = is_on_floor()
 
@@ -88,8 +92,21 @@ func fly_state(delta: float):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 
-	if Input.is_action_just_pressed("transform"):
-		state = RUN
-		trail.disable()
+	if Input.is_action_just_pressed("fly"):
+		end_fly()
 
 	move_and_slide()
+
+func start_fly():
+	state = FLY
+	trail.enable()
+	sprite.texture = fly_texture
+	run_collider.disabled = true
+	fly_collider.disabled = false
+
+func end_fly():
+	state = RUN
+	trail.disable()
+	sprite.texture = original_texture
+	fly_collider.disabled = true
+	run_collider.disabled = false
