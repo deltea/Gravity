@@ -676,7 +676,7 @@ position = Vector2(-232, 432)
 position = Vector2(-56, -336)
 
 [node name="Target5" parent="World/Targets" instance=ExtResource("7_vljsy")]
-position = Vector2(-232, -352)
+position = Vector2(712, -480)
 
 [node name="Target6" parent="World/Targets" instance=ExtResource("7_vljsy")]
 position = Vector2(488, 208)

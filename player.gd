@@ -5,9 +5,9 @@ enum { RUN, FLY }
 
 @export_group("Running")
 @export var run_speed = 220
-@export var jump_velocity = 320
+@export var jump_velocity = 340
 @export var gravity = 980
-@export var fall_gravity = 1800
+@export var fall_gravity = 2400
 @export var double_jump = true
 
 @export_group("Flying")
@@ -44,6 +44,7 @@ var run_rotation = 0
 var double_jump_rotation = 0
 var can_double_jump = false
 var stamina = 100
+var checkpoint = position
 
 func _enter_tree() -> void:
 	Globals.player = self
