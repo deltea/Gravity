@@ -6,3 +6,4 @@ const SCREEN_SIZE = Vector2(320, 240)
 var player: Player
 var level_manager: LevelManager
 var timer: SpeedrunTimer
+var alert: Alert

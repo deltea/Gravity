@@ -41,6 +41,8 @@ func pop_target():
 	else:
 		update_current_target()
 
+	Globals.alert.show_alert(str(targets_left.size()) + " more to go!")
+
 func end_level():
 	get_tree().reload_current_scene()
-	print(Globals.timer.text)
+	print(Globals.timer.time)

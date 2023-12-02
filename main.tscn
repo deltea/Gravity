@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://di2y6kfmakfxa"]
+[gd_scene load_steps=17 format=3 uid="uid://di2y6kfmakfxa"]
 
 [ext_resource type="Script" path="res://level_manager.gd" id="1_0meq5"]
 [ext_resource type="Texture2D" uid="uid://cr7cr36w0ji06" path="res://assets/background.png" id="1_t1c3w"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dikcgwleyh6kt" path="res://assets/target-ui.png" id="4_xr73o"]
 [ext_resource type="Script" path="res://timer.gd" id="7_ogbqq"]
 [ext_resource type="PackedScene" uid="uid://ducsoj3lu5jvu" path="res://target.tscn" id="7_vljsy"]
+[ext_resource type="PackedScene" uid="uid://csg320yltubvj" path="res://alert.tscn" id="8_o0nap"]
 
 [sub_resource type="SystemFont" id="SystemFont_2cpnj"]
 font_names = PackedStringArray("Pixellari")
@@ -649,6 +650,8 @@ offset_right = 49.0
 offset_bottom = 31.0
 label_settings = SubResource("LabelSettings_kng4b")
 script = ExtResource("7_ogbqq")
+
+[node name="Alert" parent="CanvasLayer" instance=ExtResource("8_o0nap")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 

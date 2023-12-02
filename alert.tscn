@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://csg320yltubvj"]
+
+[ext_resource type="Script" path="res://alert.gd" id="1_fx5ft"]
+
+[sub_resource type="SystemFont" id="SystemFont_ej44t"]
+font_names = PackedStringArray("Upheaval TT (BRK)")
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_uuqif"]
+font = SubResource("SystemFont_ej44t")
+font_size = 20
+
+[node name="Alert" type="Label"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -168.0
+offset_right = 160.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(160, 24)
+label_settings = SubResource("LabelSettings_uuqif")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_fx5ft")
+
+[node name="ShowTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="ShowTimer" to="." method="_on_show_timer_timeout"]
