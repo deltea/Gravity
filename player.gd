@@ -12,8 +12,8 @@ enum { RUN, FLY }
 
 @export_group("Flying")
 @export var fly_speed = 300
-@export var stamina_cost = 15
-@export var stamina_regen = 10
+@export var stamina_cost = 0 # 20
+@export var stamina_regen = 20
 @export var acceleration = 1800
 @export var deceleration = 1800
 @export var stamina_bar: TextureProgressBar

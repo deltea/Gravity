@@ -27,6 +27,7 @@ label_settings = SubResource("LabelSettings_uuqif")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_fx5ft")
+visible_y = 10
 
 [node name="ShowTimer" type="Timer" parent="."]
 wait_time = 3.0
