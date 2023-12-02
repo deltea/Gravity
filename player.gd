@@ -27,6 +27,8 @@ enum { RUN, FLY }
 @export var run_rotation_degrees = 30
 @export var rotation_smoothing = 1000
 @export var stamina_bar_smoothing = 200
+@export var stamina_bar_scale = 1.4
+@export var stamina_bar_scale_smoothing = 3
 
 @export_group("Gameplay")
 @export var arrow: TextureRect
@@ -58,6 +60,7 @@ func _process(delta: float) -> void:
 	sprite.rotation_degrees = move_toward(sprite.rotation_degrees, run_rotation + double_jump_rotation, rotation_smoothing * delta)
 
 	stamina_bar.value = move_toward(stamina_bar.value, stamina, stamina_bar_smoothing * delta)
+	stamina_bar.scale = stamina_bar.scale.move_toward(Vector2.ONE, stamina_bar_scale_smoothing * delta)
 
 	var current_target = Globals.level_manager.targets_left.front()
 	var direction = current_target.position - position
@@ -158,6 +161,7 @@ func _on_item_area_area_entered(area: Area2D) -> void:
 	if area is Refill:
 		area.on_collect()
 		update_stamina(100)
+		stamina_bar.scale = stamina_bar_scale * Vector2.ONE
 	elif area is Target and area == Globals.level_manager.targets_left.front():
 		Globals.level_manager.pop_target()
 		arrow.show()

@@ -3,7 +3,7 @@ class_name Target
 
 @export var unlit_texture: Texture2D
 @export var lit_texture: Texture2D
-@export var scale_smoothing = 6
+@export var scale_smoothing = 4
 @export var action_scale = 1.5
 
 @onready var sprite := $Sprite

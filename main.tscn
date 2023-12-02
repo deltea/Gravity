@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://di2y6kfmakfxa"]
+[gd_scene load_steps=16 format=3 uid="uid://di2y6kfmakfxa"]
 
 [ext_resource type="Script" path="res://level_manager.gd" id="1_0meq5"]
 [ext_resource type="Texture2D" uid="uid://cr7cr36w0ji06" path="res://assets/background.png" id="1_t1c3w"]
@@ -7,9 +7,16 @@
 [ext_resource type="Texture2D" uid="uid://clr5ypybtun8g" path="res://assets/tileset.png" id="2_kqmtn"]
 [ext_resource type="Texture2D" uid="uid://cuc712p0p1l2j" path="res://assets/target-ui-unlit.png" id="3_fas2k"]
 [ext_resource type="Texture2D" uid="uid://c7g5fuaxtvaga" path="res://assets/arrow.png" id="3_ihhh7"]
+[ext_resource type="Texture2D" uid="uid://p7eb2xwava6k" path="res://assets/stamina-bar-unlit.png" id="4_ryhdc"]
 [ext_resource type="Texture2D" uid="uid://dikcgwleyh6kt" path="res://assets/target-ui.png" id="4_xr73o"]
-[ext_resource type="PackedScene" uid="uid://bejvcspusjgu1" path="res://refill.tscn" id="5_dhpsl"]
+[ext_resource type="Script" path="res://timer.gd" id="7_ogbqq"]
 [ext_resource type="PackedScene" uid="uid://ducsoj3lu5jvu" path="res://target.tscn" id="7_vljsy"]
+
+[sub_resource type="SystemFont" id="SystemFont_2cpnj"]
+font_names = PackedStringArray("Pixellari")
+
+[sub_resource type="LabelSettings" id="LabelSettings_kng4b"]
+font = SubResource("SystemFont_2cpnj")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5mqcb"]
 texture = ExtResource("2_kqmtn")
@@ -604,11 +611,11 @@ offset_left = 296.0
 offset_top = 192.0
 offset_right = 312.0
 offset_bottom = 232.0
+pivot_offset = Vector2(8, 20)
 value = 100.0
 fill_mode = 3
-texture_under = ExtResource("2_bunqf")
+texture_under = ExtResource("4_ryhdc")
 texture_progress = ExtResource("2_bunqf")
-tint_under = Color(0.368627, 0.368627, 0.368627, 1)
 
 [node name="Arrow" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 8
@@ -635,6 +642,14 @@ offset_top = 216.0
 offset_right = 272.0
 offset_bottom = 232.0
 
+[node name="SpeedrunTimer" type="Label" parent="CanvasLayer"]
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 49.0
+offset_bottom = 31.0
+label_settings = SubResource("LabelSettings_kng4b")
+script = ExtResource("7_ogbqq")
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
@@ -658,9 +673,6 @@ position = Vector2(39, 110)
 stamina_bar = NodePath("../../CanvasLayer/Stamina")
 arrow = NodePath("../../CanvasLayer/Arrow")
 
-[node name="Refill" parent="World" instance=ExtResource("5_dhpsl")]
-position = Vector2(424, 56)
-
 [node name="Targets" type="Node" parent="World"]
 
 [node name="Target" parent="World/Targets" instance=ExtResource("7_vljsy")]
@@ -683,3 +695,5 @@ position = Vector2(488, 208)
 
 [node name="Target7" parent="World/Targets" instance=ExtResource("7_vljsy")]
 position = Vector2(-272, 32)
+
+[node name="Refills" type="Node" parent="World"]
