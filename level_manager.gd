@@ -34,3 +34,7 @@ func pop_target():
 func end_level():
 	get_tree().reload_current_scene()
 	print(Globals.timer.text)
+
+func player_die():
+	# get_tree().reload_current_scene()
+	pass

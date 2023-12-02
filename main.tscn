@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://di2y6kfmakfxa"]
+[gd_scene load_steps=18 format=3 uid="uid://di2y6kfmakfxa"]
 
 [ext_resource type="Script" path="res://level_manager.gd" id="1_0meq5"]
 [ext_resource type="Texture2D" uid="uid://cr7cr36w0ji06" path="res://assets/background.png" id="1_t1c3w"]
@@ -11,6 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://dikcgwleyh6kt" path="res://assets/target-ui.png" id="4_xr73o"]
 [ext_resource type="Script" path="res://timer.gd" id="7_ogbqq"]
 [ext_resource type="PackedScene" uid="uid://ducsoj3lu5jvu" path="res://target.tscn" id="7_vljsy"]
+[ext_resource type="PackedScene" uid="uid://b70w6mq5cvejx" path="res://lava.tscn" id="12_1o33n"]
+
+[sub_resource type="Environment" id="Environment_or4hx"]
+glow_enabled = true
 
 [sub_resource type="SystemFont" id="SystemFont_2cpnj"]
 font_names = PackedStringArray("Pixellari")
@@ -604,6 +608,9 @@ target_counter = NodePath("../CanvasLayer/TargetCounter")
 target_ui_lit = ExtResource("4_xr73o")
 target_ui_unlit = ExtResource("3_fas2k")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_or4hx")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Stamina" type="TextureProgressBar" parent="CanvasLayer"]
@@ -696,4 +703,15 @@ position = Vector2(488, 208)
 [node name="Target7" parent="World/Targets" instance=ExtResource("7_vljsy")]
 position = Vector2(-272, 32)
 
-[node name="Refills" type="Node" parent="World"]
+[node name="Danger" type="Node" parent="World"]
+
+[node name="Lava" parent="World/Danger" instance=ExtResource("12_1o33n")]
+position = Vector2(192, 96)
+
+[node name="Lava2" parent="World/Danger" instance=ExtResource("12_1o33n")]
+position = Vector2(224, 96)
+
+[node name="Lava3" parent="World/Danger" instance=ExtResource("12_1o33n")]
+position = Vector2(256, 96)
+
+[node name="Powerups" type="Node" parent="World"]

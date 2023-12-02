@@ -46,13 +46,14 @@ var run_rotation = 0
 var double_jump_rotation = 0
 var can_double_jump = false
 var stamina = 100
-var checkpoint = position
+var checkpoint: Vector2
 
 func _enter_tree() -> void:
 	Globals.player = self
 
 func _ready() -> void:
 	original_texture = sprite.texture
+	checkpoint = position
 	update_stamina(0)
 
 func _process(delta: float) -> void:
@@ -165,3 +166,10 @@ func _on_item_area_area_entered(area: Area2D) -> void:
 	elif area is Target and area == Globals.level_manager.targets_left.front():
 		Globals.level_manager.pop_target()
 		arrow.show()
+		checkpoint = area.position
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area is Lava:
+		position = checkpoint
+		trail.reset()
+		Globals.level_manager.player_die()

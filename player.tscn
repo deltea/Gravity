@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://o63hvo6vk6iw"]
+[gd_scene load_steps=9 format=3 uid="uid://o63hvo6vk6iw"]
 
 [ext_resource type="Texture2D" uid="uid://b2n37avqy4hfc" path="res://assets/player.png" id="1_igxjj"]
 [ext_resource type="Script" path="res://player.gd" id="1_in1dq"]
@@ -13,6 +13,9 @@ radius = 2.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x5htf"]
 radius = 20.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_du10h"]
+size = Vector2(6, 6)
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 10
@@ -52,4 +55,13 @@ collision_mask = 4
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_x5htf")
 
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 7
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_du10h")
+
 [connection signal="area_entered" from="ItemArea" to="." method="_on_item_area_area_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

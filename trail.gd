@@ -23,3 +23,7 @@ func enable():
 
 func disable():
 	enabled = false
+
+func reset():
+	clear_points()
+	queue = []
