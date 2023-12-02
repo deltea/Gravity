@@ -70,6 +70,9 @@ func _process(delta: float) -> void:
 	# arrow.position.x = clamp(arrow.position.x, 30, Globals.SCREEN_SIZE.x - 30)
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("restart"):
+		die()
+
 	match state:
 		RUN: run_state(delta)
 		FLY: fly_state(delta)
@@ -170,6 +173,8 @@ func _on_item_area_area_entered(area: Area2D) -> void:
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area is Lava:
-		position = checkpoint
-		trail.reset()
-		Globals.level_manager.player_die()
+		die()
+
+func die():
+	position = checkpoint
+	trail.reset()
