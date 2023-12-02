@@ -8,4 +8,7 @@ func _enter_tree() -> void:
 
 func _process(delta: float) -> void:
 	time += delta
-	text = str(round(time))
+
+	var seconds = int(time) % 60
+	var milliseconds = Time.get_ticks_msec() % 1000
+	text = str(seconds) + "." + str(milliseconds)

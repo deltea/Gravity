@@ -27,6 +27,10 @@ func pop_target():
 	target_counter.get_child(targets.size() - targets_left.size() - 1).texture = target_ui_lit
 
 	if targets_left.size() <= 0:
-		get_tree().reload_current_scene()
+		end_level()
 	else:
 		update_current_target()
+
+func end_level():
+	get_tree().reload_current_scene()
+	print(Globals.timer.text)
