@@ -55,6 +55,7 @@ func _ready() -> void:
 	original_texture = sprite.texture
 	checkpoint = position
 	update_stamina(0)
+	Events.level_end.connect(_on_level_end)
 
 func _process(delta: float) -> void:
 	sprite.scale = sprite.scale.move_toward(original_scale, squash_stretch_smoothing * delta)
@@ -63,6 +64,8 @@ func _process(delta: float) -> void:
 	stamina_bar.value = move_toward(stamina_bar.value, stamina, stamina_bar_smoothing * delta)
 	stamina_bar.scale = stamina_bar.scale.move_toward(Vector2.ONE, stamina_bar_scale_smoothing * delta)
 
+	if Globals.level_manager.targets_left.size() <= 0: return
+
 	var current_target = Globals.level_manager.targets_left.front()
 	var direction = current_target.position - position
 	arrow.rotation = direction.angle()
@@ -70,6 +73,8 @@ func _process(delta: float) -> void:
 	# arrow.position.x = clamp(arrow.position.x, 30, Globals.SCREEN_SIZE.x - 30)
 
 func _physics_process(delta: float) -> void:
+	if Globals.level_manager.level_ended: return
+
 	if Input.is_action_just_pressed("restart"):
 		die()
 
@@ -137,6 +142,7 @@ func start_fly():
 	run_collider.disabled = true
 	fly_collider.disabled = false
 	sprite.scale = Vector2.ONE * fly_transition_scale
+	Globals.timer.player_fly_start()
 
 func end_fly():
 	state = RUN
@@ -145,6 +151,7 @@ func end_fly():
 	fly_collider.disabled = true
 	run_collider.disabled = false
 	sprite.scale = Vector2.ONE * fly_transition_scale
+	Globals.timer.player_fly_stop()
 
 func update_stamina(value: float, delta: float = 1):
 	stamina += value * delta
@@ -161,6 +168,10 @@ func show_arrow(target: Target):
 	if not target == Globals.level_manager.targets_left.front(): return
 	arrow.show()
 
+func die():
+	position = checkpoint
+	trail.reset()
+
 func _on_item_area_area_entered(area: Area2D) -> void:
 	if area is Refill:
 		area.on_collect()
@@ -168,6 +179,7 @@ func _on_item_area_area_entered(area: Area2D) -> void:
 		stamina_bar.scale = stamina_bar_scale * Vector2.ONE
 	elif area is Target and area == Globals.level_manager.targets_left.front():
 		Globals.level_manager.pop_target()
+		if Globals.level_manager.level_ended: return
 		arrow.show()
 		checkpoint = area.position
 
@@ -175,6 +187,5 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area is Lava:
 		die()
 
-func die():
-	position = checkpoint
-	trail.reset()
+func _on_level_end():
+	arrow.hide()

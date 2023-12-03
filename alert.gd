@@ -16,6 +16,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	target_y = position.y
+	Events.level_end.connect(_on_level_end)
 
 func _process(delta: float) -> void:
 	position.y = move_toward(position.y, target_y, smoothing * delta)
@@ -28,3 +29,6 @@ func show_alert(_text: String):
 
 func _on_show_timer_timeout() -> void:
 	target_y = hidden_y
+
+func _on_level_end():
+	hide()

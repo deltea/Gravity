@@ -1,14 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://csg320yltubvj"]
 
+[ext_resource type="FontFile" uid="uid://titg0oq2radm" path="res://fonts/Rocket.ttf" id="1_6mu4s"]
 [ext_resource type="Script" path="res://alert.gd" id="1_fx5ft"]
 
-[sub_resource type="SystemFont" id="SystemFont_ej44t"]
-font_names = PackedStringArray("Upheaval TT (BRK)")
-subpixel_positioning = 0
-
 [sub_resource type="LabelSettings" id="LabelSettings_uuqif"]
-font = SubResource("SystemFont_ej44t")
-font_size = 20
+font = ExtResource("1_6mu4s")
 
 [node name="Alert" type="Label"]
 anchors_preset = 8

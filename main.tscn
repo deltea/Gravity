@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://di2y6kfmakfxa"]
+[gd_scene load_steps=25 format=3 uid="uid://di2y6kfmakfxa"]
 
 [ext_resource type="Script" path="res://level_manager.gd" id="1_0meq5"]
 [ext_resource type="Texture2D" uid="uid://cr7cr36w0ji06" path="res://assets/background.png" id="1_t1c3w"]
@@ -9,16 +9,35 @@
 [ext_resource type="Texture2D" uid="uid://c7g5fuaxtvaga" path="res://assets/arrow.png" id="3_ihhh7"]
 [ext_resource type="Texture2D" uid="uid://p7eb2xwava6k" path="res://assets/stamina-bar-unlit.png" id="4_ryhdc"]
 [ext_resource type="Texture2D" uid="uid://dikcgwleyh6kt" path="res://assets/target-ui.png" id="4_xr73o"]
+[ext_resource type="FontFile" uid="uid://titg0oq2radm" path="res://fonts/Rocket.ttf" id="7_dtmu6"]
 [ext_resource type="Script" path="res://timer.gd" id="7_ogbqq"]
+[ext_resource type="FontFile" uid="uid://s7tnogt8e5nx" path="res://fonts/Pixellari.ttf" id="7_sngox"]
 [ext_resource type="PackedScene" uid="uid://ducsoj3lu5jvu" path="res://target.tscn" id="7_vljsy"]
 [ext_resource type="PackedScene" uid="uid://csg320yltubvj" path="res://alert.tscn" id="8_o0nap"]
+[ext_resource type="Texture2D" uid="uid://bw0mwqg6fl7kg" path="res://assets/ranks/rank-s.png" id="10_4cxk1"]
 [ext_resource type="PackedScene" uid="uid://b70w6mq5cvejx" path="res://lava.tscn" id="12_1o33n"]
 
-[sub_resource type="SystemFont" id="SystemFont_2cpnj"]
-font_names = PackedStringArray("Pixellari")
-
 [sub_resource type="LabelSettings" id="LabelSettings_kng4b"]
-font = SubResource("SystemFont_2cpnj")
+font = ExtResource("7_sngox")
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ytvo"]
+font = ExtResource("7_sngox")
+font_color = Color(1, 0.552941, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l8sb2"]
+bg_color = Color(0, 0, 0, 0.709804)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fa5ff"]
+font = ExtResource("7_dtmu6")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_ut1ed"]
+line_spacing = 0.0
+font = ExtResource("7_sngox")
+
+[sub_resource type="LabelSettings" id="LabelSettings_m0wm4"]
+line_spacing = 0.0
+font = ExtResource("7_sngox")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5mqcb"]
 texture = ExtResource("2_kqmtn")
@@ -508,12 +527,16 @@ sources/1 = SubResource("TileSetAtlasSource_5mqcb")
 
 [node name="Main" type="Node"]
 
-[node name="LevelManager" type="Node" parent="." node_paths=PackedStringArray("targets", "target_counter")]
+[node name="LevelManager" type="Node" parent="." node_paths=PackedStringArray("targets", "target_counter", "end_panel", "rank", "time_container", "time_text")]
 script = ExtResource("1_0meq5")
 targets = [NodePath("../World/Targets/Target"), NodePath("../World/Targets/Target2"), NodePath("../World/Targets/Target3"), NodePath("../World/Targets/Target4"), NodePath("../World/Targets/Target5"), NodePath("../World/Targets/Target6")]
 target_counter = NodePath("../CanvasLayer/TargetCounter")
 target_ui_lit = ExtResource("4_xr73o")
 target_ui_unlit = ExtResource("3_fas2k")
+end_panel = NodePath("../CanvasLayer/Panel")
+rank = NodePath("../CanvasLayer/Panel/Rank")
+time_container = NodePath("../CanvasLayer/Panel/TimeContainer")
+time_text = NodePath("../CanvasLayer/Panel/TimeContainer/Time")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -555,14 +578,95 @@ offset_right = 272.0
 offset_bottom = 232.0
 
 [node name="SpeedrunTimer" type="Label" parent="CanvasLayer"]
-offset_left = 9.0
+offset_left = 10.0
 offset_top = 8.0
-offset_right = 49.0
+offset_right = 50.0
 offset_bottom = 31.0
 label_settings = SubResource("LabelSettings_kng4b")
 script = ExtResource("7_ogbqq")
+flying_color = Color(1, 1, 1, 1)
+
+[node name="TimeMultiplier" type="Label" parent="CanvasLayer/SpeedrunTimer"]
+visible = false
+layout_mode = 0
+offset_left = 31.0
+offset_top = 8.0
+offset_right = 47.0
+offset_bottom = 27.0
+rotation = -0.261799
+text = "2x"
+label_settings = SubResource("LabelSettings_6ytvo")
 
 [node name="Alert" parent="CanvasLayer" instance=ExtResource("8_o0nap")]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+visible = false
+offset_right = 320.0
+offset_bottom = 240.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_l8sb2")
+
+[node name="Rank" type="TextureRect" parent="CanvasLayer/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -88.0
+offset_right = 16.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 20)
+texture = ExtResource("10_4cxk1")
+stretch_mode = 2
+
+[node name="RankText" type="Label" parent="CanvasLayer/Panel/Rank"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 32.0
+offset_bottom = 45.0
+text = "RANK"
+label_settings = SubResource("LabelSettings_fa5ff")
+
+[node name="TimeContainer" type="Control" parent="CanvasLayer/Panel"]
+visible = false
+anchors_preset = 0
+offset_left = 56.0
+offset_top = 88.0
+offset_right = 264.0
+offset_bottom = 105.0
+pivot_offset = Vector2(104, 12)
+
+[node name="TimeText" type="Label" parent="CanvasLayer/Panel/TimeContainer"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 34.0
+offset_bottom = 8.0
+grow_vertical = 2
+text = "Time:"
+label_settings = SubResource("LabelSettings_ut1ed")
+
+[node name="Time" type="Label" parent="CanvasLayer/Panel/TimeContainer"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "10.253"
+label_settings = SubResource("LabelSettings_m0wm4")
+horizontal_alignment = 2
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 

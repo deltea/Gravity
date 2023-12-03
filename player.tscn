@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://o63hvo6vk6iw"]
+[gd_scene load_steps=8 format=3 uid="uid://o63hvo6vk6iw"]
 
 [ext_resource type="Texture2D" uid="uid://b2n37avqy4hfc" path="res://assets/player.png" id="1_igxjj"]
 [ext_resource type="Script" path="res://player.gd" id="1_in1dq"]
-[ext_resource type="Texture2D" uid="uid://d3chpeu2m4mo7" path="res://assets/player-fly.png" id="2_c5hv1"]
 [ext_resource type="PackedScene" uid="uid://bqkfbf7544rt" path="res://trail.tscn" id="3_r48iw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xck2d"]
@@ -23,7 +22,6 @@ collision_layer = 2
 collision_mask = 3
 floor_constant_speed = true
 script = ExtResource("1_in1dq")
-fly_texture = ExtResource("2_c5hv1")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -7)
