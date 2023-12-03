@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://di2y6kfmakfxa"]
+[gd_scene load_steps=28 format=3 uid="uid://di2y6kfmakfxa"]
 
 [ext_resource type="Script" path="res://level_manager.gd" id="1_0meq5"]
 [ext_resource type="Texture2D" uid="uid://cr7cr36w0ji06" path="res://assets/background.png" id="1_t1c3w"]
@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://csg320yltubvj" path="res://alert.tscn" id="8_o0nap"]
 [ext_resource type="Texture2D" uid="uid://bw0mwqg6fl7kg" path="res://assets/ranks/rank-s.png" id="10_4cxk1"]
 [ext_resource type="PackedScene" uid="uid://b70w6mq5cvejx" path="res://lava.tscn" id="12_1o33n"]
+[ext_resource type="FontFile" uid="uid://0bg5b2fppdny" path="res://fonts/Pixel.ttf" id="12_d6xhs"]
+[ext_resource type="Texture2D" uid="uid://d3chpeu2m4mo7" path="res://assets/player-fly.png" id="16_3cwth"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kng4b"]
 font = ExtResource("7_sngox")
@@ -38,6 +40,11 @@ font = ExtResource("7_sngox")
 [sub_resource type="LabelSettings" id="LabelSettings_m0wm4"]
 line_spacing = 0.0
 font = ExtResource("7_sngox")
+
+[sub_resource type="LabelSettings" id="LabelSettings_e4yf2"]
+line_spacing = 6.0
+font = ExtResource("12_d6xhs")
+font_size = 8
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5mqcb"]
 texture = ExtResource("2_kqmtn")
@@ -527,7 +534,7 @@ sources/1 = SubResource("TileSetAtlasSource_5mqcb")
 
 [node name="Main" type="Node"]
 
-[node name="LevelManager" type="Node" parent="." node_paths=PackedStringArray("targets", "target_counter", "end_panel", "rank", "time_container", "time_text")]
+[node name="LevelManager" type="Node" parent="." node_paths=PackedStringArray("targets", "target_counter", "end_panel", "rank", "time_container", "time_text", "controls")]
 script = ExtResource("1_0meq5")
 targets = [NodePath("../World/Targets/Target"), NodePath("../World/Targets/Target2"), NodePath("../World/Targets/Target3"), NodePath("../World/Targets/Target4"), NodePath("../World/Targets/Target5"), NodePath("../World/Targets/Target6")]
 target_counter = NodePath("../CanvasLayer/TargetCounter")
@@ -537,6 +544,7 @@ end_panel = NodePath("../CanvasLayer/Panel")
 rank = NodePath("../CanvasLayer/Panel/Rank")
 time_container = NodePath("../CanvasLayer/Panel/TimeContainer")
 time_text = NodePath("../CanvasLayer/Panel/TimeContainer/Time")
+controls = NodePath("../CanvasLayer/Panel/Controls")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -614,9 +622,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -16.0
-offset_top = -88.0
+offset_top = -80.0
 offset_right = 16.0
-offset_bottom = -48.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(16, 20)
@@ -634,11 +642,11 @@ label_settings = SubResource("LabelSettings_fa5ff")
 [node name="TimeContainer" type="Control" parent="CanvasLayer/Panel"]
 visible = false
 anchors_preset = 0
-offset_left = 56.0
-offset_top = 88.0
-offset_right = 264.0
-offset_bottom = 105.0
-pivot_offset = Vector2(104, 12)
+offset_left = 88.0
+offset_top = 112.0
+offset_right = 232.0
+offset_bottom = 128.0
+pivot_offset = Vector2(72, 8)
 
 [node name="TimeText" type="Label" parent="CanvasLayer/Panel/TimeContainer"]
 layout_mode = 1
@@ -668,6 +676,27 @@ text = "10.253"
 label_settings = SubResource("LabelSettings_m0wm4")
 horizontal_alignment = 2
 
+[node name="Controls" type="Label" parent="CanvasLayer/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -80.0
+offset_right = 103.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(103, 20)
+text = "Z  -  restart level
+X  -  exit to menu"
+label_settings = SubResource("LabelSettings_e4yf2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
@@ -689,6 +718,7 @@ layer_0/tile_data = PackedInt32Array(917504, 1, 6, 851968, 131073, 1, 786432, 13
 [node name="Player" parent="World" node_paths=PackedStringArray("stamina_bar", "arrow") instance=ExtResource("1_v8rmo")]
 position = Vector2(40, 208)
 stamina_bar = NodePath("../../CanvasLayer/Stamina")
+fly_texture = ExtResource("16_3cwth")
 arrow = NodePath("../../CanvasLayer/Arrow")
 
 [node name="Targets" type="Node" parent="World"]

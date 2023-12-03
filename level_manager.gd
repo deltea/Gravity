@@ -11,9 +11,11 @@ class_name LevelManager
 @export var rank: TextureRect
 @export var time_container: Control
 @export var time_text: Label
+@export var controls: Label
 
 var targets_left: Array[Target]
 var level_ended = false
+var main_menu = preload("res://main_menu.tscn")
 
 func _enter_tree() -> void:
 	Globals.level_manager = self
@@ -29,9 +31,17 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	rank.scale = rank.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
 	time_container.scale = time_container.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
+	controls.scale = controls.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
 
 	for target in target_counter.get_children():
 		target.scale = target.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
+
+	if level_ended:
+		if Input.is_action_just_pressed("jump"):
+			get_tree().reload_current_scene()
+		elif Input.is_action_just_pressed("fly"):
+			print("main menu")
+			get_tree().change_scene_to_packed(main_menu)
 
 func update_current_target():
 	targets_left.front().on_opened()
@@ -67,3 +77,11 @@ func end_level():
 	time_container.scale = ui_scale * Vector2.ONE
 	time_text.text = str(Globals.timer.text)
 	time_container.show()
+
+	await get_tree().create_timer(1.0).timeout
+
+	controls.scale = ui_scale * Vector2.ONE
+	controls.show()
+
+func get_rank():
+	pass

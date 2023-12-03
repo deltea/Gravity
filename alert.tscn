@@ -23,10 +23,12 @@ label_settings = SubResource("LabelSettings_uuqif")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_fx5ft")
-visible_y = 10
+smoothing = 150
+wobble_speed = 3
+visible_y = 5
 
 [node name="ShowTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 
 [connection signal="timeout" from="ShowTimer" to="." method="_on_show_timer_timeout"]
