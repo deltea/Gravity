@@ -7,3 +7,4 @@ var player: Player
 var level_manager: LevelManager
 var timer: SpeedrunTimer
 var alert: Alert
+var sound_manager: SoundManager

@@ -103,11 +103,12 @@ func run_state(delta: float):
 		if is_on_floor():
 			velocity.y = -jump_velocity
 			sprite.scale = Vector2(original_scale.x / stretch, original_scale.y * stretch)
-		else:
-			if can_double_jump and double_jump:
-				velocity.y = -jump_velocity
-				double_jump_rotation += (1.0 if input == 0 else input) * 360
-				can_double_jump = false
+			Globals.sound_manager.play_sound(Globals.sound_manager.jump)
+		elif can_double_jump and double_jump:
+			velocity.y = -jump_velocity
+			double_jump_rotation += (1.0 if input == 0 else input) * 360
+			can_double_jump = false
+			Globals.sound_manager.play_sound(Globals.sound_manager.jump)
 
 	if Input.is_action_just_pressed("fly"):
 		start_fly()
@@ -143,6 +144,7 @@ func start_fly():
 	fly_collider.disabled = false
 	sprite.scale = Vector2.ONE * fly_transition_scale
 	Globals.timer.player_fly_start()
+	Globals.sound_manager.play_sound(Globals.sound_manager.fly)
 
 func end_fly():
 	state = RUN
@@ -152,6 +154,7 @@ func end_fly():
 	run_collider.disabled = false
 	sprite.scale = Vector2.ONE * fly_transition_scale
 	Globals.timer.player_fly_stop()
+	Globals.sound_manager.play_sound(Globals.sound_manager.fly)
 
 func update_stamina(value: float, delta: float = 1):
 	stamina += value * delta
@@ -171,6 +174,7 @@ func show_arrow(target: Target):
 func die():
 	position = checkpoint
 	trail.reset()
+	Globals.sound_manager.play_sound(Globals.sound_manager.die)
 
 func _on_item_area_area_entered(area: Area2D) -> void:
 	if area is Refill:
@@ -182,6 +186,7 @@ func _on_item_area_area_entered(area: Area2D) -> void:
 		if Globals.level_manager.level_ended: return
 		arrow.show()
 		checkpoint = area.position
+		Globals.sound_manager.play_sound(Globals.sound_manager.target)
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area is Lava:
