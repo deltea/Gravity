@@ -11,10 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://bw0mwqg6fl7kg" path="res://assets/ranks/rank-s.png" id="9_nu8eo"]
 [ext_resource type="PackedScene" uid="uid://bsx1u7njei80f" path="res://canvas.tscn" id="10_1jct3"]
 [ext_resource type="PackedScene" uid="uid://cy3gidkbn145t" path="res://sound_manager.tscn" id="10_gnede"]
-[ext_resource type="AudioStream" uid="uid://65kju5cfkqrb" path="res://audio/music.mp3" id="10_yecnf"]
 [ext_resource type="AudioStream" uid="uid://cxcevap5ffhgy" path="res://audio/fly.wav" id="11_vtgrq"]
 [ext_resource type="AudioStream" uid="uid://bp47ih2qca7fi" path="res://audio/target.wav" id="12_c4t3r"]
 [ext_resource type="AudioStream" uid="uid://c3nu6646bdsys" path="res://audio/die.wav" id="13_vxsg7"]
+[ext_resource type="AudioStream" uid="uid://8kvr6b8yaqit" path="res://audio/music (2).mp3" id="14_naews"]
 [ext_resource type="Texture2D" uid="uid://clr5ypybtun8g" path="res://assets/tileset.png" id="19_1unud"]
 [ext_resource type="PackedScene" uid="uid://o63hvo6vk6iw" path="res://player.tscn" id="20_qg00l"]
 [ext_resource type="Texture2D" uid="uid://d3chpeu2m4mo7" path="res://assets/player-fly.png" id="21_a3o16"]
@@ -509,7 +509,7 @@ sources/1 = SubResource("TileSetAtlasSource_5mqcb")
 
 [node name="Level 1" type="Node"]
 
-[node name="LevelManager" type="Node" parent="." node_paths=PackedStringArray("targets", "target_counter", "end_panel", "rank", "time_container", "time_text", "controls")]
+[node name="LevelManager" type="Node" parent="." node_paths=PackedStringArray("targets", "target_counter", "end_panel", "rank", "time_container", "time_text", "controls", "high_score_text")]
 script = ExtResource("1_hdr5q")
 targets = [NodePath("../World/Targets/Target"), NodePath("../World/Targets/Target2"), NodePath("../World/Targets/Target3"), NodePath("../World/Targets/Target4"), NodePath("../World/Targets/Target5"), NodePath("../World/Targets/Target6")]
 target_counter = NodePath("../CanvasLayer/TargetCounter")
@@ -520,6 +520,7 @@ rank = NodePath("../CanvasLayer/Panel/Rank")
 time_container = NodePath("../CanvasLayer/Panel/TimeContainer")
 time_text = NodePath("../CanvasLayer/Panel/TimeContainer/Time")
 controls = NodePath("../CanvasLayer/Panel/Controls")
+high_score_text = NodePath("../CanvasLayer/Panel/HighScore")
 a_rank = ExtResource("4_57v2u")
 b_rank = ExtResource("5_gyfii")
 c_rank = ExtResource("6_kgjwr")
@@ -533,7 +534,7 @@ target = ExtResource("12_c4t3r")
 die = ExtResource("13_vxsg7")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_yecnf")
+stream = ExtResource("14_naews")
 volume_db = -8.0
 autoplay = true
 

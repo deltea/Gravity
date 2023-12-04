@@ -10,6 +10,7 @@ enum { MAIN, LEVEL_SELECT, SETTINGS }
 @export var level_tiles: Control
 @export var level_wobble_speed = 0.005
 @export var level_wobble_magnitude = 10
+@export var high_score: Label
 
 @onready var camera := $Camera
 
@@ -73,6 +74,13 @@ func update_options_main():
 func update_options_level_select():
 	select_index = clamp(select_index, 0, level_tiles.get_child_count() - 1)
 
+	var save_path = "user://high_score_level" + str(select_index + 1) + ".save"
+	if FileAccess.file_exists(save_path):
+		var loaded_file = FileAccess.open(save_path, FileAccess.READ)
+		high_score.text = str(loaded_file.get_var())
+	else:
+		high_score.text = "N/A"
+
 func select():
 	if state == MAIN:
 		match select_index:
@@ -95,3 +103,4 @@ func play():
 	select_index = 0
 	camera_target = camera_play_position
 	state = LEVEL_SELECT
+	update_options_level_select()

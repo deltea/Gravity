@@ -12,6 +12,7 @@ class_name LevelManager
 @export var time_container: Control
 @export var time_text: Label
 @export var controls: Label
+@export var high_score_text: Label
 
 @export var a_rank: Texture2D
 @export var b_rank: Texture2D
@@ -40,6 +41,7 @@ func _process(delta: float) -> void:
 	rank.scale = rank.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
 	time_container.scale = time_container.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
 	controls.scale = controls.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
+	high_score_text.scale = high_score_text.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
 
 	for target in target_counter.get_children():
 		target.scale = target.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
@@ -74,6 +76,7 @@ func end_level():
 	Events.level_end.emit()
 	target_counter.hide()
 	end_panel.show()
+	var is_high_score = save_high_score()
 
 	await get_tree().create_timer(1.0).timeout
 
@@ -86,6 +89,12 @@ func end_level():
 	time_container.scale = ui_scale * Vector2.ONE
 	time_text.text = str(Globals.timer.text)
 	time_container.show()
+
+	if is_high_score:
+		await get_tree().create_timer(1.0).timeout
+
+		high_score_text.scale = ui_scale * Vector2.ONE
+		high_score_text.show()
 
 	await get_tree().create_timer(1.0).timeout
 
@@ -108,3 +117,20 @@ func get_rank():
 		return d_rank
 	elif time < 60.0:
 		return e_rank
+
+func save_high_score():
+	var high_score
+	var save_path = "user://high_score_" + get_tree().get_current_scene().name.to_lower().replace(" ", "") + ".save"
+	if FileAccess.file_exists(save_path):
+		var loaded_file = FileAccess.open(save_path, FileAccess.READ)
+		high_score = loaded_file.get_var().to_float()
+		if Globals.timer.time < high_score:
+			var file = FileAccess.open(save_path, FileAccess.WRITE)
+			file.store_var(Globals.timer.text)
+			return true
+		else:
+			return false
+	else:
+		var file = FileAccess.open(save_path, FileAccess.WRITE)
+		file.store_var(Globals.timer.text)
+		return true

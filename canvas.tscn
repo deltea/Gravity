@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bsx1u7njei80f"]
+[gd_scene load_steps=19 format=3 uid="uid://bsx1u7njei80f"]
 
 [ext_resource type="Texture2D" uid="uid://p7eb2xwava6k" path="res://assets/stamina-bar-unlit.png" id="1_6f7xp"]
 [ext_resource type="Texture2D" uid="uid://b0510blj75742" path="res://assets/stamina-bar.png" id="2_3ov43"]
@@ -32,6 +32,10 @@ font = ExtResource("4_wo85d")
 [sub_resource type="LabelSettings" id="LabelSettings_m0wm4"]
 line_spacing = 0.0
 font = ExtResource("4_wo85d")
+
+[sub_resource type="LabelSettings" id="LabelSettings_j6xcp"]
+font = ExtResource("4_wo85d")
+font_color = Color(1, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_e4yf2"]
 line_spacing = 6.0
@@ -168,6 +172,17 @@ text = "10.253"
 label_settings = SubResource("LabelSettings_m0wm4")
 horizontal_alignment = 2
 
+[node name="HighScore" type="Label" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 120.0
+offset_top = 136.0
+offset_right = 203.0
+offset_bottom = 155.0
+pivot_offset = Vector2(41, 10)
+text = "High Score!"
+label_settings = SubResource("LabelSettings_j6xcp")
+
 [node name="Controls" type="Label" parent="Panel"]
 visible = false
 layout_mode = 1
@@ -177,9 +192,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -104.0
-offset_top = -80.0
+offset_top = -64.0
 offset_right = 103.0
-offset_bottom = -41.0
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(103, 20)
