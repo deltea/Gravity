@@ -13,9 +13,17 @@ class_name LevelManager
 @export var time_text: Label
 @export var controls: Label
 
+@export var a_rank: Texture2D
+@export var b_rank: Texture2D
+@export var c_rank: Texture2D
+@export var d_rank: Texture2D
+@export var e_rank: Texture2D
+@export var s_rank: Texture2D
+
 var targets_left: Array[Target]
 var level_ended = false
 var main_menu = preload("res://main_menu.tscn")
+var end_ended = false
 
 func _enter_tree() -> void:
 	Globals.level_manager = self
@@ -36,7 +44,7 @@ func _process(delta: float) -> void:
 	for target in target_counter.get_children():
 		target.scale = target.scale.move_toward(Vector2.ONE, ui_scale_smoothing * delta)
 
-	if level_ended:
+	if end_ended:
 		if Input.is_action_just_pressed("jump"):
 			get_tree().reload_current_scene()
 		elif Input.is_action_just_pressed("fly"):
@@ -69,6 +77,7 @@ func end_level():
 
 	await get_tree().create_timer(1.0).timeout
 
+	rank.texture = get_rank()
 	rank.scale = ui_scale * Vector2.ONE
 	rank.show()
 
@@ -83,5 +92,19 @@ func end_level():
 	controls.scale = ui_scale * Vector2.ONE
 	controls.show()
 
+	end_ended = true
+
 func get_rank():
-	pass
+	var time = Globals.timer.time
+	if time < 30.0:
+		return s_rank
+	elif time < 40.0:
+		return a_rank
+	elif time < 45.0:
+		return b_rank
+	elif time < 50.0:
+		return c_rank
+	elif time < 55.0:
+		return d_rank
+	elif time < 60.0:
+		return e_rank

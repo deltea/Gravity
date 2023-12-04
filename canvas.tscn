@@ -1,0 +1,201 @@
+[gd_scene load_steps=18 format=3 uid="uid://bsx1u7njei80f"]
+
+[ext_resource type="Texture2D" uid="uid://p7eb2xwava6k" path="res://assets/stamina-bar-unlit.png" id="1_6f7xp"]
+[ext_resource type="Texture2D" uid="uid://b0510blj75742" path="res://assets/stamina-bar.png" id="2_3ov43"]
+[ext_resource type="Texture2D" uid="uid://c7g5fuaxtvaga" path="res://assets/arrow.png" id="3_dp4bn"]
+[ext_resource type="FontFile" uid="uid://s7tnogt8e5nx" path="res://fonts/Pixellari.ttf" id="4_wo85d"]
+[ext_resource type="Script" path="res://timer.gd" id="5_rctaj"]
+[ext_resource type="PackedScene" uid="uid://csg320yltubvj" path="res://alert.tscn" id="6_tm1ff"]
+[ext_resource type="Texture2D" uid="uid://bw0mwqg6fl7kg" path="res://assets/ranks/rank-s.png" id="7_cxfwf"]
+[ext_resource type="FontFile" uid="uid://titg0oq2radm" path="res://fonts/Rocket.ttf" id="8_uy6sg"]
+[ext_resource type="FontFile" uid="uid://0bg5b2fppdny" path="res://fonts/Pixel.ttf" id="9_fa0dw"]
+[ext_resource type="Texture2D" uid="uid://cr7cr36w0ji06" path="res://assets/background.png" id="10_kg365"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kng4b"]
+font = ExtResource("4_wo85d")
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ytvo"]
+font = ExtResource("4_wo85d")
+font_color = Color(1, 0.552941, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l8sb2"]
+bg_color = Color(0, 0, 0, 0.709804)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fa5ff"]
+font = ExtResource("8_uy6sg")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_ut1ed"]
+line_spacing = 0.0
+font = ExtResource("4_wo85d")
+
+[sub_resource type="LabelSettings" id="LabelSettings_m0wm4"]
+line_spacing = 0.0
+font = ExtResource("4_wo85d")
+
+[sub_resource type="LabelSettings" id="LabelSettings_e4yf2"]
+line_spacing = 6.0
+font = ExtResource("9_fa0dw")
+font_size = 8
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Stamina" type="TextureProgressBar" parent="."]
+visible = false
+offset_left = 296.0
+offset_top = 192.0
+offset_right = 312.0
+offset_bottom = 232.0
+pivot_offset = Vector2(8, 20)
+value = 100.0
+fill_mode = 3
+texture_under = ExtResource("1_6f7xp")
+texture_progress = ExtResource("2_3ov43")
+
+[node name="Arrow" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -120.0
+offset_right = -144.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_dp4bn")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="TargetCounter" type="HBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 216.0
+offset_right = 272.0
+offset_bottom = 232.0
+
+[node name="SpeedrunTimer" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 50.0
+offset_bottom = 31.0
+label_settings = SubResource("LabelSettings_kng4b")
+script = ExtResource("5_rctaj")
+flying_color = Color(1, 1, 1, 1)
+
+[node name="TimeMultiplier" type="Label" parent="SpeedrunTimer"]
+visible = false
+layout_mode = 0
+offset_left = 31.0
+offset_top = 8.0
+offset_right = 47.0
+offset_bottom = 27.0
+rotation = -0.261799
+text = "2x"
+label_settings = SubResource("LabelSettings_6ytvo")
+
+[node name="Alert" parent="." instance=ExtResource("6_tm1ff")]
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+offset_right = 320.0
+offset_bottom = 240.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_l8sb2")
+
+[node name="Rank" type="TextureRect" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -80.0
+offset_right = 16.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 20)
+texture = ExtResource("7_cxfwf")
+stretch_mode = 2
+
+[node name="RankText" type="Label" parent="Panel/Rank"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 32.0
+offset_bottom = 45.0
+text = "RANK"
+label_settings = SubResource("LabelSettings_fa5ff")
+
+[node name="TimeContainer" type="Control" parent="Panel"]
+visible = false
+anchors_preset = 0
+offset_left = 88.0
+offset_top = 112.0
+offset_right = 232.0
+offset_bottom = 128.0
+pivot_offset = Vector2(72, 8)
+
+[node name="TimeText" type="Label" parent="Panel/TimeContainer"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 34.0
+offset_bottom = 8.0
+grow_vertical = 2
+text = "Time:"
+label_settings = SubResource("LabelSettings_ut1ed")
+
+[node name="Time" type="Label" parent="Panel/TimeContainer"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "10.253"
+label_settings = SubResource("LabelSettings_m0wm4")
+horizontal_alignment = 2
+
+[node name="Controls" type="Label" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -80.0
+offset_right = 103.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(103, 20)
+text = "Z  -  restart level
+X  -  exit to menu"
+label_settings = SubResource("LabelSettings_e4yf2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1.2, 1.2)
+
+[node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+texture = ExtResource("10_kg365")
+region_enabled = true
+region_rect = Rect2(0, 0, 6400, 4800)
