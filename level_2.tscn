@@ -530,6 +530,7 @@ s_rank = ExtResource("9_0b0kl")
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_f4urd")
 volume_db = -8.0
+autoplay = true
 
 [node name="CanvasLayer" parent="." instance=ExtResource("15_314kx")]
 
