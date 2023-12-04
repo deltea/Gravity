@@ -20,6 +20,9 @@ var camera_target: Vector2
 var original_camera_pos: Vector2
 
 var level_1 = preload("res://level_1.tscn")
+var level_2 = preload("res://level_2.tscn")
+var level_3 = preload("res://level_3.tscn")
+var level_4 = preload("res://level_4.tscn")
 
 func _ready() -> void:
 	update_options_main()
@@ -35,24 +38,31 @@ func _process(delta: float) -> void:
 
 func main_state():
 	if Input.is_action_just_pressed("down"):
+		Globals.sound_manager.play_sound(Globals.sound_manager.select)
 		select_index += 1
 		update_options_main()
 	elif Input.is_action_just_pressed("up"):
+		Globals.sound_manager.play_sound(Globals.sound_manager.select)
 		select_index -= 1
 		update_options_main()
 	elif Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("fly"):
+		Globals.sound_manager.play_sound(Globals.sound_manager.select)
 		select()
 
 func level_select_state():
 	if Input.is_action_just_pressed("right"):
+		Globals.sound_manager.play_sound(Globals.sound_manager.select)
 		select_index += 1
 		update_options_level_select()
 	elif Input.is_action_just_pressed("left"):
+		Globals.sound_manager.play_sound(Globals.sound_manager.select)
 		select_index -= 1
 		update_options_level_select()
 	elif Input.is_action_just_pressed("jump"):
+		Globals.sound_manager.play_sound(Globals.sound_manager.select)
 		select()
 	elif Input.is_action_just_pressed("fly"):
+		Globals.sound_manager.play_sound(Globals.sound_manager.select)
 		back()
 
 	for i in level_tiles.get_child_count():
@@ -77,7 +87,7 @@ func update_options_level_select():
 	var save_path = "user://high_score_level" + str(select_index + 1) + ".save"
 	if FileAccess.file_exists(save_path):
 		var loaded_file = FileAccess.open(save_path, FileAccess.READ)
-		high_score.text = str(loaded_file.get_var())
+		high_score.text = "High Score: " + str(loaded_file.get_var())
 	else:
 		high_score.text = "N/A"
 
@@ -90,9 +100,9 @@ func select():
 	elif state == LEVEL_SELECT:
 		match select_index:
 			0: get_tree().change_scene_to_packed(level_1)
-			1: print("level 2")
-			2: print("level 3")
-			3: print("level 4")
+			1: get_tree().change_scene_to_packed(level_2)
+			2: get_tree().change_scene_to_packed(level_3)
+			3: get_tree().change_scene_to_packed(level_4)
 
 func back():
 	select_index = 0

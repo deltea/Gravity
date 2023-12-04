@@ -1,8 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy3gidkbn145t"]
+[gd_scene load_steps=7 format=3 uid="uid://cy3gidkbn145t"]
 
 [ext_resource type="Script" path="res://sound_manager.gd" id="1_m5qjq"]
 [ext_resource type="AudioStream" uid="uid://0pridpkgcfk5" path="res://audio/jump.wav" id="2_bov48"]
+[ext_resource type="AudioStream" uid="uid://dvisr8t268g08" path="res://audio/select.wav" id="3_epqhl"]
+[ext_resource type="AudioStream" uid="uid://cxcevap5ffhgy" path="res://audio/fly.wav" id="3_hx826"]
+[ext_resource type="AudioStream" uid="uid://bp47ih2qca7fi" path="res://audio/target.wav" id="4_qtp2k"]
+[ext_resource type="AudioStream" uid="uid://c3nu6646bdsys" path="res://audio/die.wav" id="5_x4mgp"]
 
 [node name="SoundManager" type="AudioStreamPlayer"]
 script = ExtResource("1_m5qjq")
 jump = ExtResource("2_bov48")
+fly = ExtResource("3_hx826")
+target = ExtResource("4_qtp2k")
+die = ExtResource("5_x4mgp")
+select = ExtResource("3_epqhl")

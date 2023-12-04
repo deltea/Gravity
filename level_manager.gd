@@ -105,15 +105,15 @@ func end_level():
 
 func get_rank():
 	var time = Globals.timer.time
-	if time < 30.0:
+	if time < 40.0:
 		return s_rank
-	elif time < 40.0:
-		return a_rank
-	elif time < 45.0:
-		return b_rank
 	elif time < 50.0:
-		return c_rank
+		return a_rank
 	elif time < 55.0:
+		return b_rank
+	elif time < 60.0:
+		return c_rank
+	elif time < 65.0:
 		return d_rank
 	else:
 		return e_rank

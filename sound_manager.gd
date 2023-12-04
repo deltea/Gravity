@@ -5,6 +5,7 @@ class_name SoundManager
 @export var fly: AudioStream
 @export var target: AudioStream
 @export var die: AudioStream
+@export var select: AudioStream
 
 func _enter_tree() -> void:
 	Globals.sound_manager = self
