@@ -115,7 +115,7 @@ func get_rank():
 		return c_rank
 	elif time < 55.0:
 		return d_rank
-	elif time < 60.0:
+	else:
 		return e_rank
 
 func save_high_score():
