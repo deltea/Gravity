@@ -96,7 +96,7 @@ func select():
 		match select_index:
 			0: play()
 			1: print("settings")
-			2: print("quit")
+			2: get_tree().quit()
 	elif state == LEVEL_SELECT:
 		match select_index:
 			0: get_tree().change_scene_to_packed(level_1)
