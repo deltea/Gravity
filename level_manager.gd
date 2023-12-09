@@ -77,7 +77,6 @@ func end_level():
 	target_counter.hide()
 	end_panel.show()
 	var is_high_score = save_high_score()
-	unlock_levels()
 
 	await get_tree().create_timer(1.0).timeout
 
@@ -135,13 +134,3 @@ func save_high_score():
 		var file = FileAccess.open(save_path, FileAccess.WRITE)
 		file.store_var(Globals.timer.text)
 		return true
-
-func unlock_levels():
-	if Globals.timer.time < 50.0:
-		var save_path = "user://unlockable.save"
-		if FileAccess.file_exists(save_path):
-			var file = FileAccess.open(save_path, FileAccess.WRITE)
-			file.store_var(get_tree().get_current_scene().name.replace("Level ", "").to_int() + 2)
-		else:
-			var file = FileAccess.open(save_path, FileAccess.WRITE)
-			file.store_var(2)

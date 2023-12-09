@@ -99,10 +99,10 @@ func select():
 			2: get_tree().quit()
 	elif state == LEVEL_SELECT:
 		match select_index:
-			0: start_level(0, level_1)
-			1: start_level(1, level_2)
-			2: start_level(2, level_3)
-			3: start_level(3, level_4)
+			0: get_tree().change_scene_to_packed(level_1)
+			1: get_tree().change_scene_to_packed(level_2)
+			2: get_tree().change_scene_to_packed(level_3)
+			3: get_tree().change_scene_to_packed(level_4)
 
 func back():
 	select_index = 0
@@ -114,32 +114,3 @@ func play():
 	camera_target = camera_play_position
 	state = LEVEL_SELECT
 	update_options_level_select()
-	update_locked_levels()
-
-func start_level(index: int, level: PackedScene):
-	var save_path = "user://unlockable.save"
-	var unlocked_levels = 1
-	if FileAccess.file_exists(save_path):
-		var loaded_file = FileAccess.open(save_path, FileAccess.READ)
-		unlocked_levels = loaded_file.get_var()
-
-	if index < unlocked_levels:
-		get_tree().change_scene_to_packed(level)
-	else:
-		print("locked")
-
-func update_locked_levels():
-	var save_path = "user://unlockable.save"
-	var unlocked_levels = 1
-	if FileAccess.file_exists(save_path):
-		var loaded_file = FileAccess.open(save_path, FileAccess.READ)
-		unlocked_levels = loaded_file.get_var()
-
-	for i in level_tiles.get_child_count():
-		var level = level_tiles.get_child(i)
-		if i < unlocked_levels:
-			level.get_node("Lock").hide()
-			level.get_node("LevelNum").show()
-		else:
-			level.get_node("Lock").show()
-			level.get_node("LevelNum").hide()
