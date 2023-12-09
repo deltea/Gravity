@@ -76,7 +76,7 @@ func _physics_process(delta: float) -> void:
 	if Globals.level_manager.level_ended: return
 
 	if Input.is_action_just_pressed("restart"):
-		die()
+		get_tree().reload_current_scene()
 
 	match state:
 		RUN: run_state(delta)
