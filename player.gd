@@ -47,6 +47,7 @@ var double_jump_rotation = 0
 var can_double_jump = false
 var stamina = 100
 var checkpoint: Vector2
+var main_menu_scene = preload("res://main_menu.tscn")
 
 func _enter_tree() -> void:
 	Globals.player = self
@@ -77,6 +78,9 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
+
+	if Input.is_action_just_pressed("esc"):
+		get_tree().change_scene_to_packed(main_menu_scene)
 
 	match state:
 		RUN: run_state(delta)
